@@ -3,7 +3,7 @@ pragma solidity 0.4.6;
 contract DXF_Tokens{
 
   //States
-  bool public doOpen=true;
+  bool public dxfOpen=true;
   bool public refundState;
   bool public transferLocked=true;
 
@@ -77,7 +77,7 @@ contract DXF_Tokens{
     // refuse if more than 12 months have passed
     if (now>startingDateFunding+365 days) throw;
     // Abort if DO is not open.
-    if (!doOpen) throw;
+    if (!dxfOpen) throw;
     // verify if the account is not a VIP account
     if (vips[msg.sender]) throw;
     // Do not allow creating less than 10 ether or more than the cap tokens.
@@ -202,8 +202,6 @@ contract DXF_Tokens{
     payable
     onlyAdmin
   {
-    // Abort if DO is open.
-    // if (doOpen) throw;
     address memberRefunded=members[i].member;
     if (memberRefunded==0) throw;
     uint amountTokens=msg.value;
@@ -241,7 +239,7 @@ contract DXF_Tokens{
     onlyAdmin
   {
     closingDateFunding=now;
-    doOpen=false;
+    dxfOpen=false;
     //verify if the cap has been reached
     //if not : refund mode
     if (totalTokens<tokensCreationMin)
@@ -250,6 +248,7 @@ contract DXF_Tokens{
       }
     else
       {
+        //send balance, but should not be necessary.      
 	if(!admin.send(this.balance)) throw;
       }
   }
@@ -258,21 +257,21 @@ contract DXF_Tokens{
   /* function reopenDO() */
   /*   onlyAdmin */
   /* { */
-  /*   doOpen=true; */
+  /*   dxfOpen=true; */
   /*   transferLocked=true; */
   /* } */
 
   function allowTransfers()
     onlyAdmin
   {
-    if (doOpen) throw;
+    if (dxfOpen) throw;
     transferLocked=false;
   }
 
   function disableTransfers()
     onlyAdmin
   {
-    if (doOpen) throw;
+    if (dxfOpen) throw;
     transferLocked=true;
   }
 

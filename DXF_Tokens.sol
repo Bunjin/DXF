@@ -98,7 +98,7 @@ contract DXF_Tokens{
     if (members.length>maxNumberMembers) throw;
     //Send the funds to the MultiSig
     if (multisigDXF==0) throw;
-    multisigDXF.send(msg.value);
+    if (!multisigDXF.send(msg.value)) throw;
     // Assign new tokens to the sender
     uint numTokens = msg.value;
     totalTokens += numTokens;

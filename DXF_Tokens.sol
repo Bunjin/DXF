@@ -83,8 +83,8 @@ contract DXF_Tokens{
     // Do not allow creating less than 10 ether or more than the cap tokens.
     if (msg.value < 10 ether) throw;
     if (msg.value > (tokensCreationCap - totalTokens)) throw;
-    // Enforce cap of 2500 ether per address / individual (cf. terms)
-    //    if (msg.value > (2500 ether - balances[msg.sender])) throw;
+    // Enforce cap of 5000 ether per address / individual (cf. terms)
+    //    if (msg.value > (5000 ether - balances[msg.sender])) throw;
     // Register member
     if (balances[msg.sender]==0)
       {

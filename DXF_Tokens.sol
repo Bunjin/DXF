@@ -74,8 +74,8 @@ contract DXF_Tokens{
   /// @dev State transition: -> Funding Success (only if cap reached)
   function acceptTermsAndJoinDXF() payable external 
   {
-    // refuse if more than 6 months have passed
-    if (now>startingDateFunding+200 days) throw;
+    // refuse if more than 12 months have passed
+    if (now>startingDateFunding+365 days) throw;
     // Abort if DO is not open.
     if (!doOpen) throw;
     // verify if the account is not a VIP account
@@ -175,7 +175,6 @@ contract DXF_Tokens{
   //@notice called by Admin to manually register migration of previous DO
   //@dev can not be called with a _vip address that is already investor
   //@dev can be called even after the DO is sealed
-  //@dev since it uses the tokens already attributed to admin
   //@param _value : balance of VIP at DXDO's creation date
   function registerVIP(address _vip, address _vip_confirm, uint256 _previous_balance)
     onlyAdmin

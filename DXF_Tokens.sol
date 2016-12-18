@@ -10,7 +10,7 @@ contract DXF_Tokens{
   uint256 public startingDateFunding;
   uint256 public closingDateFunding;
   //Maximum number of participants
-  uint256 public maxNumberMembers=6250;
+  uint256 public maxNumberMembers=1000;
   //Token caps, this includes the 12500 tokens already created for previous DO
   uint256 public totalTokens;
   uint256 public constant tokensCreationMin = 25000 ether;

@@ -112,6 +112,8 @@ contract DXF_Tokens{
 
 
   //NOT INCLUDED IN LATEST VERSION
+  //since we move the funds to multisig
+  //refund will be with payback()
   /* /// @notice Get back the ether sent during the funding in case the funding */
   /* /// has not reached the minimum level. */
   /* /// @dev Required state: refund true */

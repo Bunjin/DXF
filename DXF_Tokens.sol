@@ -7,10 +7,10 @@ contract DXF_Tokens{
   bool public refundState;
   bool public transferLocked=true;
 
-  uint256 public startingDateFunding;
+  uint256 public constant startingDateFunding=now;
   uint256 public closingDateFunding;
   //Maximum number of participants
-  uint256 public maxNumberMembers=1000;
+  uint256 public constant maxNumberMembers=1000;
   //Token caps, this includes the 12500 tokens that will be attributed to former users (VIPs)
   uint256 public totalTokens;
   uint256 public constant tokensCreationMin = 25000 ether;

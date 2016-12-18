@@ -257,21 +257,21 @@ contract DXF_Tokens{
   /* function reopenDO() */
   /*   onlyAdmin */
   /* { */
-  /*   doOpen=true; */
+  /*   dxfOpen=true; */
   /*   transferLocked=true; */
   /* } */
 
   function allowTransfers()
     onlyAdmin
   {
-    if (doOpen) throw;
+    if (dxfOpen) throw;
     transferLocked=false;
   }
 
   function disableTransfers()
     onlyAdmin
   {
-    if (doOpen) throw;
+    if (dxfOpen) throw;
     transferLocked=true;
   }
 

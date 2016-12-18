@@ -38,7 +38,7 @@ contract DXF_Tokens{
   event VipMigration(address indexed _vip, uint256 _value);
 
   // Token parameters
-  string public constant name = "DXF - Decentralized eXperience FriendsClub";
+  string public constant name = "DXF - Decentralized eXperience Friends";
   string public constant symbol = "DXF";
   uint8 public constant decimals = 18;  // 18 decimal places, the same as ETH.
 

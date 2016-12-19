@@ -7,10 +7,10 @@ contract DXF_Tokens{
   bool public refundState;
   bool public transferLocked=true;
 
-  uint256 public constant startingDateFunding=now;
+  uint256 public startingDateFunding;
   uint256 public closingDateFunding;
   //Maximum number of participants
-  uint256 public constant maxNumberMembers=1000;
+  uint256 public constant maxNumberMembers=5000;
   //Token caps, this includes the 12500 tokens that will be attributed to former users (VIPs)
   uint256 public totalTokens;
   uint256 public constant tokensCreationMin = 25000 ether;
@@ -35,6 +35,7 @@ contract DXF_Tokens{
 
   event Transfer(address indexed _from, address indexed _to, uint256 _value);
   event Refund(address indexed _to, uint256 _value);
+  event failingRefund(address indexed _to, uint256 _value);
   event VipMigration(address indexed _vip, uint256 _value);
 
   // Token parameters
@@ -55,7 +56,7 @@ contract DXF_Tokens{
   {
     admin = msg.sender;
     startingDateFunding=now;
-    multisigDXF="ADDRESS_TO_FILL"; //or switch to constructor param
+    multisigDXF=ADDRESS_MULTISIG; //or switch to constructor param
     //increment array by 1 for indexes
     members.push(Member(0,0,0));
   }
@@ -69,14 +70,14 @@ contract DXF_Tokens{
 
   //USER FUNCTIONS  
   /// @notice Create tokens when funding is active.
-  /// @notice By using this function you accept the terms of DXDO
+  /// @notice By using this function you accept the terms of DXF
   /// @dev Required state: Funding Active
   /// @dev State transition: -> Funding Success (only if cap reached)
   function acceptTermsAndJoinDXF() payable external 
   {
     // refuse if more than 12 months have passed
     if (now>startingDateFunding+365 days) throw;
-    // Abort if DO is not open.
+    // Abort if DXF is not open.
     if (!dxfOpen) throw;
     // verify if the account is not a VIP account
     if (vips[msg.sender]) throw;
@@ -184,9 +185,9 @@ contract DXF_Tokens{
     //don't allow migration to a non empty address
     if (balances[_vip]!=0) throw; 
     if (_previous_balance==0) throw;
-    //too many tokens created via VIP migration
     uint numberTokens=_previous_balance+(_previous_balance/3);
     totalTokens+=numberTokens;
+    //too many tokens created via VIP migration
     if (numberTokens>remainingTokensVIPs) throw;     
     remainingTokensVIPs-=numberTokens;
     balances[_vip]+=numberTokens;
@@ -219,7 +220,10 @@ contract DXF_Tokens{
 	vips[memberRefunded]=false;
 	indexMembers[memberRefunded]=0;
       }
-    if (!memberRefunded.send(msg.value)) throw;
+    if (!memberRefunded.send(msg.value))
+      {
+        failingRefund(memberRefunded,msg.value);
+      }
     Refund(memberRefunded,msg.value);
   }
 

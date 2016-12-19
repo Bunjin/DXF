@@ -147,7 +147,6 @@ contract DXF_Tokens{
   {
     // Cancel if tranfer is not allowed
     if (transferLocked) throw;
-    if (refundState) throw;
     if (balances[_to]!=0) throw;
     if (balances[msg.sender]!=0)
       {
@@ -270,14 +269,12 @@ contract DXF_Tokens{
   function allowTransfers()
     onlyAdmin
   {
-    if (dxfOpen) throw;
     transferLocked=false;
   }
 
   function disableTransfers()
     onlyAdmin
   {
-    if (dxfOpen) throw;
     transferLocked=true;
   }
 
@@ -297,7 +294,7 @@ contract DXF_Tokens{
   {
     vip=vips[_owner];
     balance_ether=balances[_owner]/(1 ether);
-    share_dxf_per_thousands=100*balances[_owner]/totalTokens;
+    share_dxf_per_thousands=1000*balances[_owner]/totalTokens;
   }
 
 

@@ -35,6 +35,7 @@ contract DXF_Tokens{
 
   event Transfer(address indexed _from, address indexed _to, uint256 _value);
   event Refund(address indexed _to, uint256 _value);
+  event failingRefund(address indexed _to, uint256 _value);
   event VipMigration(address indexed _vip, uint256 _value);
 
   // Token parameters
@@ -219,7 +220,10 @@ contract DXF_Tokens{
 	vips[memberRefunded]=false;
 	indexMembers[memberRefunded]=0;
       }
-    if (!memberRefunded.send(msg.value)) throw;
+    if (!memberRefunded.send(msg.value))
+      {
+        failingRefund(memberRefunded,msg.value);
+      }
     Refund(memberRefunded,msg.value);
   }
 

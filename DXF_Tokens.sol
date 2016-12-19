@@ -297,7 +297,7 @@ contract DXF_Tokens{
   {
     vip=vips[_owner];
     balance_ether=balances[_owner]/(1 ether);
-    share_dxf_per_thousand=100*balances[_owner]/totalTokens;
+    share_dxf_per_thousands=100*balances[_owner]/totalTokens;
   }
 
 

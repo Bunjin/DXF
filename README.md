@@ -2,7 +2,7 @@
 
 
 
-Multisig Wallet:
+Multisig Wallet With Daily Limit:
 
 -Admin functions have to be called with their raw data via the submit Transaction with target the multisigwallet
 They will be submitted to the required number of sigs of the multisig.

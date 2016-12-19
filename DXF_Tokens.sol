@@ -37,6 +37,7 @@ contract DXF_Tokens{
   event Refund(address indexed _to, uint256 _value);
   event failingRefund(address indexed _to, uint256 _value);
   event VipMigration(address indexed _vip, uint256 _value);
+  event newMember(address indexed _from);
 
   // Token parameters
   string public constant name = "DXF - Decentralized eXperience Friends";
@@ -89,6 +90,7 @@ contract DXF_Tokens{
     // Register member
     if (balances[msg.sender]==0)
       {
+        newMember(msg.sender); //event
 	indexMembers[msg.sender]=members.length;
 	members.push(Member(msg.sender,now,msg.value));
       }

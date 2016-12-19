@@ -85,8 +85,8 @@ contract DXF_Tokens{
     // Do not allow creating less than 10 ether or more than the cap tokens.
     if (msg.value < 10 ether) throw;
     if (msg.value > (tokensCreationCap - totalTokens)) throw;
-    // Enforce cap of 5000 ether per address / individual (cf. terms)
-    //    if (msg.value > (5000 ether - balances[msg.sender])) throw;
+    // Enforce cap of 10 000 ethers per address / individual
+    if (msg.value > (10000 ether - balances[msg.sender])) throw;
     // Register member
     if (balances[msg.sender]==0)
       {
@@ -99,7 +99,7 @@ contract DXF_Tokens{
 	members[indexMembers[msg.sender]].initial_value+=msg.value;
       }
     if (members.length>maxNumberMembers) throw;
-    //Send the funds to the MultiSig
+    //Send the funds to the MultiSig Wallet
     if (multisigDXF==0) throw;
     if (!multisigDXF.send(msg.value)) throw;
     // Assign new tokens to the sender

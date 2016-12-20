@@ -290,10 +290,10 @@ contract DXF_Tokens{
     return balances[_owner];
   }
 
-  function accountInformation(address _owner) external constant returns (bool vip, uint balance_ether, uint share_dxf_per_thousands) 
+  function accountInformation(address _owner) external constant returns (bool vip, uint balance_dxf, uint share_dxf_per_thousands) 
   {
     vip=vips[_owner];
-    balance_ether=balances[_owner]/(1 ether);
+    balance_dxf=balances[_owner]/(1 ether);
     share_dxf_per_thousands=1000*balances[_owner]/totalTokens;
   }
 
